@@ -6,7 +6,7 @@ import { ProgressTracker } from '@/components/ProgressTracker';
 import { ResultScreen } from '@/components/ResultScreen';
 import { api } from '@/services/api';
 import { useToast } from '@/hooks/use-toast';
-import { ArrowLeft, Sparkles } from 'lucide-react';
+import { ArrowLeft, ArrowRight, BookOpen, Wand2, Image as ImageIcon, Download, Sparkles } from 'lucide-react';
 import type { Story, ProgressUpdate } from '@/types';
 import { cn } from '@/lib/utils';
 
@@ -124,8 +124,8 @@ export const Wizard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background to-muted/30">
-      <div className="container max-w-6xl mx-auto px-4 py-8">
+    <div className="min-h-screen bg-background">
+      <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
         {/* Header */}
         {step !== 'landing' && step !== 'progress' && (
           <div className="mb-8 animate-fade-in">
@@ -133,7 +133,7 @@ export const Wizard = () => {
               <Button
                 variant="ghost"
                 onClick={handleBack}
-                className="mb-4"
+                className="mb-4 -ml-2"
               >
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Back
@@ -144,50 +144,146 @@ export const Wizard = () => {
 
         {/* Landing Page */}
         {step === 'landing' && (
-          <div className="flex flex-col items-center justify-center min-h-[80vh] text-center space-y-8 animate-fade-in">
-            <div className="space-y-4">
-              <div className="flex items-center justify-center gap-3 mb-4">
-                <Sparkles className="w-12 h-12 text-primary animate-float" />
-                <h1 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
-                  AI Storybook Generator
-                </h1>
-                <Sparkles className="w-12 h-12 text-secondary animate-float" style={{ animationDelay: '0.5s' }} />
-              </div>
-              
-              <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto">
-                Create Your Personalized AI-Powered Storybook
-              </p>
-              
-              <p className="text-base text-muted-foreground max-w-xl mx-auto">
-                Upload your photo and become the main character in classic fairy tales brought to life by AI
-              </p>
-            </div>
+          <div className="min-h-screen flex items-center py-12 lg:py-20">
+            <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              {/* Hero Section - Split Layout */}
+              <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+                {/* Left Column - Content */}
+                <div className="space-y-8 lg:space-y-10 animate-fade-in">
+                  {/* Badge */}
+                  <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium">
+                    <Sparkles className="w-4 h-4" />
+                    <span>AI-Powered Story Creation</span>
+                  </div>
 
-            <Button
-              variant="hero"
-              size="xl"
-              onClick={() => setStep('select-story')}
-              className="animate-bounce-in"
-            >
-              Get Started
-              <Sparkles className="w-5 h-5 ml-2" />
-            </Button>
+                  {/* Main Heading */}
+                  <div className="space-y-6">
+                    <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-foreground tracking-tight leading-[1.1]">
+                      Become the Hero of Your Own
+                      <span className="block text-primary mt-2">Storybook</span>
+                    </h1>
+                    <p className="text-xl sm:text-2xl text-muted-foreground leading-relaxed max-w-xl">
+                      Transform yourself into classic fairy tale characters with AI-generated personalized storybooks. Upload your photo and watch the magic happen.
+                    </p>
+                  </div>
 
-            <div className="grid grid-cols-3 gap-6 max-w-2xl mt-12 text-sm">
-              <div className="space-y-2 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
-                <div className="text-3xl">📸</div>
-                <p className="font-semibold">Upload Photo</p>
-                <p className="text-muted-foreground text-xs">Choose your best portrait</p>
+                  {/* CTA Buttons */}
+                  <div className="flex flex-col sm:flex-row gap-4 pt-4">
+                    <Button
+                      variant="default"
+                      size="xl"
+                      onClick={() => setStep('select-story')}
+                      className="group px-8 py-6 text-lg font-semibold shadow-lg hover:shadow-xl transition-all"
+                    >
+                      Create Your Story
+                      <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+                    </Button>
+                    {/* <Button
+                      variant="outline"
+                      size="xl"
+                      className="px-8 py-6 text-lg font-semibold"
+                    >
+                      See Examples
+                    </Button> */}
+                  </div>
+
+                  {/* Stats */}
+                  <div className="flex items-center gap-8 pt-4">
+                    <div>
+                      <div className="text-3xl font-bold text-foreground">15+</div>
+                      <div className="text-sm text-muted-foreground">Unique Scenes</div>
+                    </div>
+                    <div className="h-12 w-px bg-border" />
+                    <div>
+                      <div className="text-3xl font-bold text-foreground">100%</div>
+                      <div className="text-sm text-muted-foreground">AI Generated</div>
+                    </div>
+                    <div className="h-12 w-px bg-border" />
+                    <div>
+                      <div className="text-3xl font-bold text-foreground">5min</div>
+                      <div className="text-sm text-muted-foreground">Average Time</div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right Column - Visual */}
+                <div className="relative lg:block hidden animate-fade-in" style={{ animationDelay: '0.2s' }}>
+                  <div className="relative">
+                    {/* Main Visual Card */}
+                    <div className="relative bg-gradient-to-br from-card to-muted/50 rounded-2xl border border-border p-8 shadow-2xl">
+                      {/* Book Preview */}
+                      <div className="aspect-[3/4] bg-gradient-to-br from-primary/10 via-secondary/10 to-accent/10 rounded-xl flex items-center justify-center relative overflow-hidden">
+                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(120,119,198,0.1),transparent_70%)]" />
+                          <img src="/hero.jpeg" alt="Book Preview" className="w-full h-full object-cover" />
+                        <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-card/95 to-transparent">
+                          <div className="text-lg font-bold text-foreground">Your Story</div>
+                          <div className="text-sm text-muted-foreground">15 pages of magic</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Floating Elements */}
+                    <div className="absolute -top-4 -right-4 w-20 h-20 bg-primary/20 rounded-2xl border border-primary/30 backdrop-blur-sm flex items-center justify-center animate-float">
+                      <Wand2 className="w-10 h-10 text-primary" />
+                    </div>
+                    <div className="absolute -bottom-4 -left-4 w-16 h-16 bg-secondary/20 rounded-xl border border-secondary/30 backdrop-blur-sm flex items-center justify-center animate-float" style={{ animationDelay: '0.5s' }}>
+                      <ImageIcon className="w-8 h-8 text-secondary" />
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div className="space-y-2 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-                <div className="text-3xl">✨</div>
-                <p className="font-semibold">AI Magic</p>
-                <p className="text-muted-foreground text-xs">15 custom illustrations</p>
+
+              {/* Features Section */}
+              <div className="mt-20 lg:mt-32 pt-16 border-t border-border">
+                <div className="grid sm:grid-cols-3 gap-8 lg:gap-12 max-w-5xl mx-auto">
+                  <div className="space-y-4 text-center animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+                    <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary/10 text-primary mb-4">
+                      <ImageIcon className="w-8 h-8" />
+                    </div>
+                    <h3 className="text-lg font-semibold text-foreground">Upload Photo</h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      Simply upload a clear portrait. Our AI handles the rest.
+                    </p>
+                  </div>
+                  <div className="space-y-4 text-center animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+                    <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-secondary/10 text-secondary mb-4">
+                      <Wand2 className="w-8 h-8" />
+                    </div>
+                    <h3 className="text-lg font-semibold text-foreground">AI Magic</h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      15 unique illustrations featuring you as the main character.
+                    </p>
+                  </div>
+                  <div className="space-y-4 text-center animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
+                    <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-accent/10 text-accent mb-4">
+                      <Download className="w-8 h-8" />
+                    </div>
+                    <h3 className="text-lg font-semibold text-foreground">Download PDF</h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      Get your personalized storybook as a beautiful, high-quality PDF.
+                    </p>
+                  </div>
+                </div>
               </div>
-              <div className="space-y-2 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
-                <div className="text-3xl">📚</div>
-                <p className="font-semibold">Get PDF</p>
-                <p className="text-muted-foreground text-xs">Download your storybook</p>
+
+              {/* Trust Badges */}
+              <div className="mt-16 lg:mt-20 flex flex-wrap items-center justify-center gap-6 lg:gap-12 text-sm text-muted-foreground">
+                <div className="flex items-center gap-2">
+                  <div className="w-1.5 h-1.5 rounded-full bg-success" />
+                  <span className="font-medium">Privacy First</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-1.5 h-1.5 rounded-full bg-success" />
+                  <span className="font-medium">No Watermarks</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-1.5 h-1.5 rounded-full bg-success" />
+                  <span className="font-medium">High Quality</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-1.5 h-1.5 rounded-full bg-success" />
+                  <span className="font-medium">Instant Download</span>
+                </div>
               </div>
             </div>
           </div>
@@ -195,23 +291,30 @@ export const Wizard = () => {
 
         {/* Story Selection */}
         {step === 'select-story' && (
-          <div className="space-y-8 animate-slide-in-right">
-            <div className="text-center space-y-2">
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-                Choose Your Story
+          <div className="space-y-12 animate-fade-in">
+            {/* Header */}
+            <div className="text-center space-y-3 max-w-2xl mx-auto">
+              <h2 className="text-4xl sm:text-5xl font-bold text-foreground tracking-tight">
+                Choose Your Adventure
               </h2>
-              <p className="text-muted-foreground">
-                Select a classic tale to star in
+              <p className="text-lg text-muted-foreground">
+                Pick a timeless tale and become the star of your own story
               </p>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-              {Object.values(stories).map((story) => (
-                <StoryCard
+            {/* Stories Grid */}
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 max-w-6xl mx-auto">
+              {Object.values(stories).map((story, index) => (
+                <div
                   key={story.id}
-                  story={story}
-                  onSelect={() => handleStorySelect(story)}
-                />
+                  className="animate-fade-in-up"
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  <StoryCard
+                    story={story}
+                    onSelect={() => handleStorySelect(story)}
+                  />
+                </div>
               ))}
             </div>
           </div>
@@ -219,13 +322,13 @@ export const Wizard = () => {
 
         {/* Image Upload */}
         {step === 'upload-image' && selectedStory && (
-          <div className="max-w-2xl mx-auto space-y-8 animate-slide-in-right">
-            <div className="text-center space-y-2">
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground">
+          <div className="max-w-3xl mx-auto space-y-10 animate-fade-in">
+            <div className="text-center space-y-3">
+              <h2 className="text-4xl sm:text-5xl font-bold text-foreground tracking-tight">
                 Upload Your Photo
               </h2>
-              <p className="text-muted-foreground">
-                You'll star in <span className="text-primary font-semibold">{selectedStory.title}</span>
+              <p className="text-lg text-muted-foreground">
+                You'll be the star of <span className="text-primary font-semibold">{selectedStory.title}</span>
               </p>
             </div>
 
@@ -235,20 +338,20 @@ export const Wizard = () => {
             />
 
             <Button
-              variant="hero"
+              variant="default"
               size="xl"
               onClick={handleGenerate}
               disabled={!selectedImage || isLoading}
-              className="w-full"
+              className="w-full group shadow-lg hover:shadow-xl transition-all"
             >
               {isLoading ? (
                 <>
-                  <span className="animate-pulse">Generating...</span>
+                  <span className="animate-pulse">Generating your storybook...</span>
                 </>
               ) : (
                 <>
                   Generate My Storybook
-                  <Sparkles className="w-5 h-5 ml-2" />
+                  <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
                 </>
               )}
             </Button>
@@ -258,12 +361,12 @@ export const Wizard = () => {
         {/* Progress Tracking */}
         {step === 'progress' && progress && (
           <div className="animate-fade-in py-12">
-            <div className="text-center mb-12 space-y-2">
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground">
+            <div className="text-center mb-12 space-y-3 max-w-2xl mx-auto">
+              <h2 className="text-4xl sm:text-5xl font-bold text-foreground tracking-tight">
                 Creating Your Storybook
               </h2>
-              <p className="text-muted-foreground">
-                Sit back and relax while AI works its magic ✨
+              <p className="text-lg text-muted-foreground">
+                Sit back and relax while we bring your story to life
               </p>
             </div>
 
